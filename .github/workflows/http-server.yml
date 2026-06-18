@@ -1,0 +1,19 @@
+name: CI - HTTP Server
+
+on:
+  push:
+    paths:
+      - "http-server/**"
+
+env:
+  IMAGE_NAME: http-server
+  DOCKER_USERNAME: saranshkhulbe7
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout Repo
+      - name: Checkout Repo
+        uses: actions/checkout@v4
