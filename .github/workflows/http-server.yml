@@ -27,4 +27,6 @@ jobs:
           context: ./http-server
           file: ./http-server/Dockerfile
           push: true
-          tags: ${{secrets.DOCKER_USERNAME}}/http-server:${{github.sha}}
+          tags: |
+            ${{secrets.DOCKER_USERNAME}}/http-server:${{github.sha}}
+            ${{ secrets.DOCKER_USERNAME }}/http-server:latest
