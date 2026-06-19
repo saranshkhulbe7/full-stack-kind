@@ -17,3 +17,27 @@ jobs:
       # 1. Checkout Repo
       - name: Checkout Repo
         uses: actions/checkout@v4
+
+      # 2. Get commit SHA (used for tagging images)
+      - name: Set short SHA
+        run: echo "SHA_SHORT=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      # 3. Login to Docker Hub
+      - name: Docker Hub Login
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login \
+          -u "${{ secrets.DOCKER_USERNAME }}" \
+          --password-stdin
+
+      # 4. Build Docker Image
+      - name: Build Docker Image
+        run: docker build \
+          -t $DOCKER_USERNAME/$IMAGE_NAME:$SHA_SHORT \
+          -t $DOCKER_USERNAME/$IMAGE_NAME:latest \
+          ./http-server
+
+      # 5. Push Docker image
+      - name: Push Docker Image
+        run: |
+          docker push $DOCKER_USERNAME/$IMAGE_NAME:$SHA_SHORT
+          docker push $DOCKER_USERNAME/$IMAGE_NAME:latest
