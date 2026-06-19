@@ -43,7 +43,7 @@ app.post("/api/messages", async (req, res) => {
 });
 
 app.get("/api/messages", async (_req, res) => {
-  const rawMessages = await redis.lrange("messages", 0, 9);
+  const rawMessages = await redis.lrange("messages", 0, 8);
 
   res.json({
     messages: rawMessages.map((item) => JSON.parse(item)),

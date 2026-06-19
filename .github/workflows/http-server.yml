@@ -31,9 +31,11 @@ jobs:
 
       # 4. Build Docker Image
       - name: Build Docker Image
-        run: docker build \
-          -t $DOCKER_USERNAME/$IMAGE_NAME:$SHA_SHORT \
-          -t $DOCKER_USERNAME/$IMAGE_NAME:latest \
+        run: |
+          IMAGE=$DOCKER_USERNAME/$IMAGE_NAME
+          docker build \
+          -t $IMAGE:$SHA_SHORT \
+          -t $IMAGE:latest \
           ./http-server
 
       # 5. Push Docker image
