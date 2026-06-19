@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-server-deployment
+  namespace: k8s-basics
+  labels:
+    app: http-server
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: http-server
+
+  template:
+    metadata:
+      labels:
+        app: http-server
+
+    spec:
+      containers:
+        - name: http-server
+          image: saranshkhulbe7/http-server:latest
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 4000
+
+          env:
+            - name: PORT
+              value: "4000"
+            - name: REDIS_URL
+              value: redis://redis-service:6379
